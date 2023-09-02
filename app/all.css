@@ -1,0 +1,156 @@
+*{
+    padding: 0;
+    margin: 0;
+
+}
+main{
+    margin: 0 auto;
+    height: 50vh;
+    width: clamp( 500px ,30vw, 550px);
+
+
+}
+form{
+    position: relative;
+    display: block;
+    height: inherit;
+    
+    display: flex;
+    flex-direction: row;
+}
+
+
+.language-div{
+
+    display: none;
+    position: absolute;
+
+    background: rgb(90, 89, 89);
+
+    height: 100%;
+
+    width: 100%;
+ }   
+
+.input-1_selector
+{
+    background-color:rgb(90, 89, 89) ;
+    border: 1px solid red;
+    width:50%;
+    height: calc(100% - 2px);
+}
+.input-2_selector2{
+    border: 1px solid red;
+    width: 50%;
+}
+
+/* search */
+.inputsearch-container{
+
+    margin-top: 4px;
+    margin-left: 3px;
+    padding-left:10px;
+    display: inline-block;
+    width: 90%;
+    height: 1.7em;
+    border: 1px solid rgb(130, 129, 129);
+    border-radius: 3px;
+
+
+}
+.search-icons{
+
+    padding: 3px 8px 0px 0px;
+    float:right;
+    color: rgb(73, 72, 72);
+    font-size: 17px;
+}
+.search-bar-input{
+    outline: none;
+
+    color: rgb(199, 198, 198);
+    display: inline-block;
+    width: calc(90% - 2px );
+    height: 1.6em;
+    background-color: inherit;
+    border: none;
+
+
+
+
+}
+.faXMARK{
+    display: inline-block;
+    padding-left: 10px;
+    padding-top: 2px;
+    color:  rgb(73, 72, 72);
+    font-size: 17px;
+    transform: translateY(4px);
+    height: 100%;
+    width: 100%;
+    margin-top:2px;
+}
+.faXMARK :hover{
+cursor: pointer ;
+}
+.fontawesomeicon-container-search{
+
+    display: inline-block;
+    border-radius: 3px;
+
+    margin-top: 1px;
+    height: 1.7em;
+    padding:1px 0px 0px 0px;
+    width: calc( 10% - 25px);
+
+}
+
+/*  */
+.select-lang-1{
+    background-color: rgb(42, 40, 40);
+    font-size: 17px;
+    color: rgb(1, 74, 107) ;
+    border: 1px solid rgb(203, 203, 203);
+    height: 2em;
+    border-radius: 3px;
+    width: 100%;
+    border-radius: 1px 1px 5px rgb(197, 196, 196);
+
+}
+.select-lang-1:hover{
+    cursor: pointer;
+}
+.input-left-translate{
+    color: white;
+    resize: none;
+    background-color: transparent;
+    display: block;
+    font-size: 17px;
+    width:calc(80% - 3px) ;
+    border: 1px solid red;
+    outline: none;
+    border: none;
+    height: calc(100% - 33px);
+
+
+}
+.GET-LANGUAGE-CONTAINER{
+    overflow: scroll;
+    display: grid;
+    border: 1px solid blue;
+    grid-template-columns: repeat(3 , 33.3%) ;
+    height: 1.5em;
+    height: calc(100% - 36px);
+    /* make height to 32 later cause borders will be 4 less*/
+
+}
+.GET-LANGUAGE-CONTAINER span{
+    height: 1.5em;
+    color: rgb(172, 171, 171);
+
+}
+.GET-LANGUAGE-CONTAINER span:hover{
+    border: 1px solid ;
+    border-radius: 3px;
+    background-color: rgb(155, 155, 155);
+}
