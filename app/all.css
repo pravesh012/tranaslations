@@ -137,7 +137,7 @@ cursor: pointer ;
 .GET-LANGUAGE-CONTAINER{
     overflow: scroll;
     display: grid;
-    border: 1px solid blue;
+
     grid-template-columns: repeat(3 , 33.3%) ;
     height: 1.5em;
     height: calc(100% - 36px);

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@/node_modules/@fortawesome/react-fontawesome/i
 import { faSearch, faXmark } from "@/node_modules/@fortawesome/free-solid-svg-icons/index";
 import { GetData } from "../fetch_data_schemas/get_lang";
 import { JSXElementConstructor, ReactElement, ReactNode, useEffect, useState } from "react";
+import { languageClicked } from "./languageClicked";
 
 // defining few other client side component here cause i have the fectch data here//
 
@@ -38,13 +39,14 @@ export function Main(){
                     </span>
 
 
-                    <div className = 'GET-LANGUAGE-CONTAINER'>
+                    <div className = 'GET-LANGUAGE-CONTAINER' onClick = { languageClicked } >
+                        {/* i cannot */}
                         { ( () =>{
                             let values: any[] = []
-                            data && data.forEach ((element: any) =>{
-                                return values.push(<span>{element.name}</span>);
+                            data && data.forEach ((element: any, index: number ) =>{
+                                return values.push(<span key = { index }>{element.name}</span>);
                             })
-                            return values
+                            return values;
                         })()}
                         
                     </div>
@@ -57,8 +59,8 @@ export function Main(){
                     {/* children are the main content parent as used as conatiner */}
                         {/* disabled disbable the arrtribute */}
                         
-                        <select  onClick = {()=>{ setoptions({display: 'block'}) }}className = ' select-lang-1'>
-                            <option>test</option>
+                        <select onClick = {()=>{ setoptions({display: 'block'}) }}className = ' select-lang-1'>
+
                         </select>
                         <textarea name = 'value' className= "input-left-translate"  placeholder = 'Enter Text'></textarea>
 
