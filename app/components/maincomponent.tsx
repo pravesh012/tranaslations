@@ -10,11 +10,17 @@ import { languageClicked } from "./languageClicked";
 
 
 export function Main(){
+    let typedData: any[] = [];
+    const filteredary: any[] = [];
+    const thirdFiltered:any[] = []
     const [data , setdata ] = useState(undefined);
     const [ options , setoptions ] = useState({ display: 'none'
      });
-     const [ typedSearch, setTypedSerach ] = useState([]);
-     const [ hideSpans , setHideSpans ] = useState('block');
+    
+    //  counter keep tracks of indexs of each input;//
+   
+    //  second iteration on search//
+ 
 
 
 
@@ -26,41 +32,78 @@ export function Main(){
         }).catch(err => console.error(err));
 
 
-    }, []);
+        }, []);
 
 
 
-    // useEffect(()=>{
-
-    //     const StringValue = typedSearch[ typedSearch.length - 1];
-    //     console.log(data)
-    //     if(data){
-
-    //         data.filter(( _element: any , _index: number ) =>{
-    //             const options = 
-    //         })
-
-    //     }
-    //     else{
-    //         console.error('error data is empty')
-    //     }
+    const SearchEngine = ( event: any )=>{    
+        const eventvalue: string = event.target.value;
+        typedData.push( eventvalue );
+        const typedValues: any = typedData[ typedData.length - 1];
 
 
-    // }, [typedSearch])
+            
+        if( eventvalue === '' ){
+            // clear the search array
+            typedData = [];
+            return;  
+        };
 
 
-    const SearchEngine = ( event: any )=>{        
-        const eventvalue = event.target.value;
-            eventvalue.length > 1 ? setHideSpans('none') : setHideSpans('block')
+       
+        if(typedValues.length == 1){
+           console.log('im here 1')
+            data && data.filter(( _element: any ) =>{
 
-            console.log(hideSpans)
-        if(eventvalue == ''){
-           setTypedSerach([]); 
+                if( typedValues == _element.name[0] ){
+                    filteredary.push( _element );
+                    return;
+                };
+                 
+                
+            })
+
+        }
+        else if( typedValues.length == 2 ){
+           
+            filteredary.filter(( _element ) =>{
+
+                if( typedValues.charAt(1) == _element.name.charAt(1) ){
+                    console.log( _element )
+                    thirdFiltered.push(_element);
+                };
+
+            })
+
         }
         else{
-            const result = [...typedSearch, eventvalue];
-            setTypedSerach(result);
+
+
+            
+            for(let index = 0; index < thirdFiltered.length; index++){
+                console.log('im here 3')
+                if(thirdFiltered.length == 1){
+                    console.log('it is' , thirdFiltered)
+                    
+                }
+                else{
+                    console.log('more options')
+                }
+
+
+            }
+
         }
+
+
+
+
+
+
+
+        
+
+
         
 
 
@@ -84,7 +127,7 @@ export function Main(){
                     </span>
 
                         {/* hide the parent instead of child, child is grid */}
-                    <div className = 'parent-GET-CONTAINER' style = {{ display:hideSpans }}>
+                    <div className = 'parent-GET-CONTAINER' >
                         <div className = 'GET-LANGUAGE-CONTAINER' onClick = { languageClicked } >
                         {/* i cannot */}
                         { 
