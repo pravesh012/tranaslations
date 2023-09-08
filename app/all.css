@@ -6,7 +6,7 @@
 }
 main{
     margin: 0 auto;
-    height: 50vh;
+    height:356px;
     width: clamp( 500px ,30vw, 550px);
 
 
@@ -136,18 +136,16 @@ cursor: pointer ;
 
 
 }
-.parent-GET-CONTAINER{
-    overflow-y: scroll;
-    scrollbar-color: rgb(42, 40, 40) ;
-   
-    height: calc(100% - 32px);
-}
+
 
 .GET-LANGUAGE-CONTAINER{
+
     display: grid;
-  
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-color: rgb(42, 40, 40) ;
     grid-template-columns: repeat(3 , 33.3%) ;
-    height: calc(100% - 32px);
+    height:320px;
     /* make height to 32 later cause borders will be 4 less*/
 
 }

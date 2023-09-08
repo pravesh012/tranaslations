@@ -11,9 +11,11 @@ import { languageClicked } from "./languageClicked";
 
 export function Main(){
     let typedData: any[] = [];
-    const filteredary: any[] = [];
+
+    const [filteredary, setFilteredArray]: any[] = useState([]);
     const thirdFiltered:any[] = []
     const [data , setdata ] = useState(undefined);
+    const [userSearched , setUserSearched] = useState({display:'block'});
     const [ options , setoptions ] = useState({ display: 'none'
      });
     
@@ -46,54 +48,57 @@ export function Main(){
         if( eventvalue === '' ){
             // clear the search array
             typedData = [];
+            setUserSearched({display: 'block' })
             return;  
         };
 
 
        
         if(typedValues.length == 1){
-           console.log('im here 1')
-            data && data.filter(( _element: any ) =>{
+
+            setUserSearched({display: 'none' });
+            data && data.filter(( _element: any, index: number ) =>{
 
                 if( typedValues == _element.name[0] ){
-                    filteredary.push( _element );
-                    return;
-                };
-                 
-                
+
+                     setFilteredArray([<span key = {index} >{ _element.name }</span>])
+                    
+                    };                
             })
 
+            
+
         }
-        else if( typedValues.length == 2 ){
+        // else if( typedValues.length == 2 ){
            
-            filteredary.filter(( _element ) =>{
+        //     filteredary.filter(( _element ) =>{
 
-                if( typedValues.charAt(1) == _element.name.charAt(1) ){
-                    console.log( _element )
-                    thirdFiltered.push(_element);
-                };
+        //         if( typedValues.charAt(1) == _element.name.charAt(1) ){
+        //             console.log( _element )
+        //             thirdFiltered.push(_element);
+        //         };
 
-            })
+        //     })
 
-        }
-        else{
+        // }
+        // else{
 
 
             
-            for(let index = 0; index < thirdFiltered.length; index++){
-                console.log('im here 3')
-                if(thirdFiltered.length == 1){
-                    console.log('it is' , thirdFiltered)
+        //     for(let index = 0; index < thirdFiltered.length; index++){
+        //         console.log('im here 3')
+        //         if(thirdFiltered.length == 1){
+        //             console.log('it is' , thirdFiltered)
                     
-                }
-                else{
-                    console.log('more options')
-                }
+        //         }
+        //         else{
+        //             console.log('more options')
+        //         }
 
 
-            }
+        //     }
 
-        }
+    // }
 
 
 
@@ -127,8 +132,11 @@ export function Main(){
                     </span>
 
                         {/* hide the parent instead of child, child is grid */}
-                    <div className = 'parent-GET-CONTAINER' >
-                        <div className = 'GET-LANGUAGE-CONTAINER' onClick = { languageClicked } >
+                    <div  >    
+                        { filteredary && console.log(filteredary)}
+
+                        <div className = 'parent-GET-CONTAINER' style={userSearched}>
+                            <div className = 'GET-LANGUAGE-CONTAINER' onClick = { languageClicked }>
                         {/* i cannot */}
                         { 
                          data && data.map ((element: any, index: number ) =>{
@@ -136,7 +144,9 @@ export function Main(){
                         })
                         }
                         
-                    </div>
+                            </div>
+                        </div>
+                       
                     </div>
                     
                 </div> 
