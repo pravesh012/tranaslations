@@ -4,6 +4,7 @@ import { faSearch, faXmark, faCaretDown } from "@/node_modules/@fortawesome/free
 import { GetData } from "../fetch_data_schemas/get_lang";
 import { JSXElementConstructor, ReactElement, ReactNode, useEffect, useState } from "react";
 import { languageClicked } from "./languageClicked";
+import { after } from "node:test";
 
 
 // defining few other client side component here cause i have the fectch data here//
@@ -11,21 +12,28 @@ import { languageClicked } from "./languageClicked";
 
 export function Main(){
     let typedData: any[] = [];
-
+// filtered data filters from the data//
     const [filteredary, setFilteredArray]: any[] = useState([]);
-    const thirdFiltered:any[] = []
+    //below state has collection of language data//
     const [data , setdata ] = useState(undefined);
+    // below state is same as filteredary but this shows on the browser//
+    const [indexActive, setindexActive]: any[] = useState([]);
+    // state is used to verify if user clicked the search or not.//
     const [userSearched , setUserSearched] = useState({display:'block'});
+
+    //this below state is used to show the entire language, it is also used in X when clicked it disappears//
     const [ options , setoptions ] = useState({ display: 'none'
      });
-    
-    //  counter keep tracks of indexs of each input;//
+    const [userLanguageInput, setuserLanguageInput] = useState(undefined);
    
-    //  second iteration on search//
+    let sourcefilter: any[] = [];
+    let [source, setSource]: any[] = useState([]);
+   
+    useEffect(()=>{
+        console.log(source)
+    }, [source])
  
-
-
-
+//gets the data from the route once//
     useEffect(()=>{
 
         GetData().then((data)=>{
@@ -37,31 +45,39 @@ export function Main(){
         }, []);
 
 
-
+// search engine//
     const SearchEngine = ( event: any )=>{    
+        
         const eventvalue: string = event.target.value;
+        
         typedData.push( eventvalue );
         const typedValues: any = typedData[ typedData.length - 1];
 
 
-            
+            // clicks 
         if( eventvalue === '' ){
             // clear the search array
             typedData = [];
-            setUserSearched({display: 'block' })
+            setUserSearched({display: 'block' });
+            setFilteredArray([]);
+            setindexActive([])
             return;  
         };
 
 
        
         if(typedValues.length == 1){
-
+           
             setUserSearched({display: 'none' });
             data && data.filter(( _element: any, index: number ) =>{
 
-                if( typedValues == _element.name[0] ){
-      
-                    filteredary.push(  _element.name )
+                if( typedValues.toUpperCase() == _element.name[0].toUpperCase() ){
+
+                    sourcefilter.push(_element)
+                    filteredary.push(  _element.name );
+
+                    indexActive.push ( _element.name  );
+                    setindexActive(indexActive)
                     
                     setFilteredArray(filteredary);
                     };                
@@ -70,38 +86,28 @@ export function Main(){
             
 
         }
-
-        // else if( typedValues.length == 2 ){
-           
-        //     filteredary.filter(( _element ) =>{
-
-        //         if( typedValues.charAt(1) == _element.name.charAt(1) ){
-        //             console.log( _element )
-        //             thirdFiltered.push(_element);
-        //         };
-
-        //     })
-
-        // }
-        // else{
-
-
+        else{
+            setindexActive([]);
+            const afterFirstIndex = typedValues.substring(1, typedValues.length);
             
-        //     for(let index = 0; index < thirdFiltered.length; index++){
-        //         console.log('im here 3')
-        //         if(thirdFiltered.length == 1){
-        //             console.log('it is' , thirdFiltered)
-                    
-        //         }
-        //         else{
-        //             console.log('more options')
-        //         }
 
+            filteredary && filteredary.filter( (_element: any , index: number) =>{
+                
+                let elementvalue = _element.substring(1 , _element.length );
 
-        //     }
+                if( elementvalue.startsWith( afterFirstIndex ) ){
+                    setindexActive(_element)
+                }
+                else{
+                    return;
+                }
 
-    // }
+        
+            })
 
+        }
+
+      
 
 
 
@@ -134,10 +140,32 @@ export function Main(){
                     </span>
 
                         {/* hide the parent instead of child, child is grid */}
-                    <div  >    
+                        {/* filterdata onclick will make the select language the language */}
+                    <div className="filtered-data"  onClick={(event: any )=>{ setuserLanguageInput( event.target.innerHTML );  setoptions({display: 'none'});
+                
+                  
+                
+                        }}>    
                         
                             {
-                                filteredary && filteredary.map((element: any, index: number ) =>{ return (<span key={index}>{element}</span>) })
+                              (
+                                // if search has multiple results show them all else show aviable one//
+                                ()=>{
+                                    let value;
+                                    if(typeof(indexActive) == 'object'){
+
+                                    return value =  indexActive.map(( element: any, index: number)=>{
+                                            return <span key={ index }> {element}</span>
+                                          });
+                                          
+                                    }
+                                   else{
+                                    return value = (<span key = {'just01'}>{indexActive}</span>)
+                                   }
+                                   
+                                }
+                              )()
+                               
                             }
 
                         <div className = 'parent-GET-CONTAINER' style={userSearched}>
@@ -145,7 +173,7 @@ export function Main(){
                         {/* i cannot */}
                         { 
                          data && data.map ((element: any, index: number ) =>{
-                            return <span  key = { index }>{element.name}</span>;
+                            return <span key = { index }>{element.name}</span>;
                         })
                         }
                         
@@ -159,11 +187,16 @@ export function Main(){
 
                  {/* above end of languages */}
                 {/* first input */}
-                <div className="input-1_selector">
+                <div className="input-1_selector" >
                     {/* children are the main content parent as used as conatiner */}
                         {/* disabled disbable the arrtribute */}
+
                         
-                        <div onClick = {()=>{ setoptions({display: 'block'}) }} className = ' select-lang-1'>English
+                        <div  onClick = {()=>{ setoptions({display: 'block'}) }} className = ' select-lang-1'>
+                            {(()=>{
+                                
+                                return  userLanguageInput ? userLanguageInput : 'English'
+                            })()}
                             <FontAwesomeIcon className = 'dropdown-div'icon = { faCaretDown }/>
 
                         </div>

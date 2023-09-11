@@ -175,3 +175,9 @@ cursor: pointer ;
     border-radius: 3px;
     background-color: rgb(155, 155, 155);
 }
+.filtered-data > span{
+    width: 100%;
+    display: inline-block;
+    border: 1px solid red;
+}
+    
